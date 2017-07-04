@@ -6,6 +6,10 @@ cat /hosts > /etc/hosts
 
 mkdir -p /hdfs/namenode /hdfs/datanode /hadoop/tmp/
 
+$HADOOP_PREFIX/sbin/stop-dfs.sh
+$HADOOP_PREFIX/sbin/stop-yarn.sh
+$HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh stop historyserver
+
 if [[ $HOSTNAME == "master" ]]; then
     if [[ $FORMAT == "true" ]]; then
         $HADOOP_PREFIX/bin/hdfs namenode -format
