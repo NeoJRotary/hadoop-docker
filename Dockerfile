@@ -39,8 +39,6 @@ RUN chown root:root /etc/ssh/*
 RUN chmod 600 /root/.ssh/*
 RUN chown root:root /root/.ssh/*
 
-COPY .bash_profile /root/
-COPY .profile /root/
 COPY hosts /
 COPY hadoop.sh /
 RUN chmod +x /hadoop.sh
