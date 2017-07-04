@@ -19,7 +19,6 @@ JobHistory : `http://localhost:19888/`
 
 ### Hadoop Configuration
 Please read [docs](https://hadoop.apache.org/docs/r2.7.3/)  
-If you're going to change hadoop home path, remember to update not only `Dockerfile` but also `.bash_profile` and `.profile`
 
 ### HOSTS
 Setup hosts in `hosts`  
