@@ -8,10 +8,10 @@ Build from `openjdk:8-alpine`
 - Run `docker build -t hadoop .`
 - Create new docker network `docker network create --subnet 172.18.0.0/16 hadoop`
 - Run two slave container  
-`docker run --name hadoop-s1 --net hadoop --ip 172.18.1.1  -e HOSTNAME="slave01" -it hadoop /hadoop.sh`  
-`docker run --name hadoop-s2 --net hadoop --ip 172.18.1.2  -e HOSTNAME="slave02" -it hadoop /hadoop.sh`
+`docker run --name hadoop-s1 --net hadoop --ip 172.18.1.1 -e HOSTNAME="slave01" -it -d hadoop`  
+`docker run --name hadoop-s2 --net hadoop --ip 172.18.1.2 -e HOSTNAME="slave02" -it -d hadoop`
 - Run master container  
-`docker run --name hadoop-master --net hadoop --ip 172.18.1.0 -p 50070:50070 -p 8088:8088 -p 19888:19888 -e HOSTNAME="master" -e FORMAT="true" -it hadoop /hadoop.sh  `
+`docker run --name hadoop-master --net hadoop --ip 172.18.1.0 -p 50070:50070 -p 8088:8088 -p 19888:19888 -e HOSTNAME="master" -it hadoop`
 - Browse each Web UI for more information  
 Namenode : `http://localhost:50070`  
 Resourcemanager : `http://localhost:8088`  

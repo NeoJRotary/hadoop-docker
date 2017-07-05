@@ -39,8 +39,11 @@ RUN chown root:root /etc/ssh/*
 RUN chmod 600 /root/.ssh/*
 RUN chown root:root /root/.ssh/*
 
+VOLUME /data
+
 COPY hosts /
 COPY hadoop.sh /
 RUN chmod +x /hadoop.sh
 RUN chmod +x /$HADOOP_HOME/sbin/*.sh
-CMD  ["/hadoop.sh"]
+
+CMD ["/hadoop.sh", "-bash"]

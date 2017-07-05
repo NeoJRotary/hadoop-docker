@@ -3,8 +3,4 @@
     <name>fs.default.name</name>
     <value>hdfs://master:9000</value>
   </property>
-  <property>
-    <name>hadoop.tmp.dir</name>
-    <value>/hadoop/tmp/</value>
-  </property>
 </configuration>
