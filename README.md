@@ -7,24 +7,37 @@ Build from `openjdk:8-alpine`
 - Delete `hadoop/share/doc` to decrease file size
 - Run `docker build -t hadoop .`
 - Create new docker network `docker network create --subnet 172.18.0.0/16 hadoop`
-- Run two slave container  
-`docker run --name hadoop-s1 --net hadoop --ip 172.18.1.1 -e HOSTNAME="slave01" -it -d hadoop`  
-`docker run --name hadoop-s2 --net hadoop --ip 172.18.1.2 -e HOSTNAME="slave02" -it -d hadoop`
-- Run master container  
-`docker run --name hadoop-master --net hadoop --ip 172.18.1.0 -p 50070:50070 -p 8088:8088 -p 19888:19888 -e HOSTNAME="master" -it hadoop`
+- Run two datanodes  
+`docker run --name hadoop-n2 --net hadoop --ip 172.18.1.2 -e -it -d hadoop`  
+`docker run --name hadoop-n3 --net hadoop --ip 172.18.1.3 -e -it -d hadoop`
+- Run core namenode  
+`docker run --name hadoop-n1 --net hadoop --ip 172.18.1.1 -e ROLE="namenode" -p 50070:50070 -p 8088:8088 -p 19888:19888 -it hadoop`
 - Browse each Web UI for more information  
 Namenode : `http://localhost:50070`  
 Resourcemanager : `http://localhost:8088`  
 JobHistory : `http://localhost:19888/`
 
+### ENV VAR
+- ROLE : set "namenode" for core namenode. Default is empty.
+- MODE : set "ENV" for ENV mode. Default is empty.  
+(About ENV mode, see HOSTS part below)
+- HOSTS : be used in ENV mode. Default is empty.
+
 ### Hadoop Configuration
-Please read [docs](https://hadoop.apache.org/docs/r2.7.3/)  
+System will auto-setup configuration files by `slaves`. ( or you can just hard-coding your files )  
+First one will be core namenode.  
+Second one will be secondary namenode.  
+  
+Read [hadoop docs/r2.7.3](https://hadoop.apache.org/docs/r2.7.3/)  for detail.
 
 ### HOSTS
-Setup hosts in `hosts`  
-Update hostname/ip in `slaves`  
-Update hostname/ip in `core-site.xml` and `hdfs-site.xml`  
-Update docker command to your subnet, ip and hostname
+Default system will overwrite `/etc/hosts` by your `hosts` file. Don't forget to change `slaves` also.    
+  
+If you set `-e MODE="ENV"`, you also have to set `-e HOSTS="HOST1,HOST2,HOST3"`. According to `$HOSTS`, system create `slaves` and configure hadoop by it.    
+In this case, system skips overwritting `/etc/hosts`. It is recommend to also set docker hostname `-h HOST1` in docker command. Docker will change settings in `/etc/hosts` to your hostname instead container id. 
+
+For example, we setup by docker's container DNS hostname :  
+`docker run --name hadoop-n1 --net hadoop --ip 172.18.1.1 -h hadoop-n1.hadoop -e ROLE="namenode" -e MODE="ENV" -e HOSTS="hadoop-n1.hadoop,hadoop-n2.hadoop,hadoop-n3.hadoop" -p 50070:50070 -p 8088:8088 -p 19888:19888 -it hadoop`
 
 ### SSH
-For quick setup, we pre-generate keys in `ssh` folder. You can update yours or change config files here.
+For quick setup, we pre-generate keys in `ssh` folder. You can generate yours and update the config.

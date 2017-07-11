@@ -1,11 +1,11 @@
 <configuration>
   <property>
     <name>dfs.namenode.http-address</name>
-    <value>master:50070</value>
+    <value>NAMENODE:50070</value>
   </property>
   <property>
     <name>dfs.namenode.secondary.http-address</name>
-    <value>slave01:50090</value>
+    <value>SECONDNODE:50090</value>
   </property>
   <property>
     <name>dfs.namenode.name.dir</name>
