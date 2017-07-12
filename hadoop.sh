@@ -13,6 +13,14 @@ else
   IFS='\n' read -ra hostList <<< "$( < "$HADOOP_CONF_DIR"/slaves)"
 fi
 
+if [ "$DNSNAMESERVER" != "" ]; then
+  sed -i 's/DNSNAMESERVER/'"$DNSNAMESERVER"'/g' $HADOOP_CONF_DIR/hdfs-site.xml
+  sed -i 's/DNSNAMESERVER/'"$DNSNAMESERVER"'/g' $HADOOP_CONF_DIR/mapred-site.xml
+else 
+  sed -i 's/DNSNAMESERVER/default/g' $HADOOP_CONF_DIR/hdfs-site.xml
+  sed -i 's/DNSNAMESERVER/default/g' $HADOOP_CONF_DIR/mapred-site.xml
+fi
+
 sed -i 's/NAMENODE/'"${hostList[0]}"'/g' $HADOOP_CONF_DIR/core-site.xml
 sed -i 's/NAMENODE/'"${hostList[0]}"'/g' $HADOOP_CONF_DIR/hdfs-site.xml
 sed -i 's/NAMENODE/'"${hostList[0]}"'/g' $HADOOP_CONF_DIR/yarn-site.xml

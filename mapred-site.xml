@@ -3,4 +3,8 @@
     <name>mapreduce.framework.name</name>
     <value>yarn</value>
   </property>
+  <property>
+    <name>mapreduce.tasktracker.dns.nameserver</name>
+    <value>DNSNAMESERVER</value>
+  </property>
 </configuration>

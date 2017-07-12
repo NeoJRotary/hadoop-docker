@@ -22,6 +22,7 @@ JobHistory : `http://localhost:19888/`
 - MODE : set "ENV" for ENV mode. Default is empty.  
 (About ENV mode, see HOSTS part below)
 - HOSTS : be used in ENV mode. Default is empty.
+- DNSNAMESERVER : change the DNS settings in `hdfs-site.xml` and `mapred-site.xml`. Default is "default".
 
 ### Hadoop Configuration
 System will auto-setup configuration files by `slaves`. ( or you can just hard-coding your files )  

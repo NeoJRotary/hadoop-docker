@@ -27,4 +27,8 @@
     <name>dfs.permissions.enabled</name>
     <value>false</value>
   </property>
+  <property>
+    <name>dfs.datanode.dns.nameserver</name>
+    <value>DNSNAMESERVER</value>
+  </property>
 </configuration>
