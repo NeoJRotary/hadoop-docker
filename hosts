@@ -1,4 +1,4 @@
 127.0.0.1 localhost
-172.18.1.1 HOST1
-172.18.1.2 HOST2
-172.18.1.3 HOST3
+172.18.1.1 n1-hadoop
+172.18.1.2 n2-hadoop
+172.18.1.3 n3-hadoop

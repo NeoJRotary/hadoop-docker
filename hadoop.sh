@@ -1,16 +1,14 @@
 #!/bin/bash
-/usr/sbin/sshd
-
 if [ "$MODE" == "ENV" ]; then
   IFS=',' read -ra hostList <<< "$HOSTS"
   slaves=""
   for h in "${hostList[@]}"; do
     slaves=$slaves$h$'\n'
   done
-  echo $slaves > "$HADOOP_CONF_DIR"/slaves 
+  echo $slaves > $HADOOP_CONF_DIR/slaves 
 else
   cat /hosts > /etc/hosts
-  IFS='\n' read -ra hostList <<< "$( < "$HADOOP_CONF_DIR"/slaves)"
+  IFS=' ' read -ra hostList <<< $(<$HADOOP_CONF_DIR/slaves)
 fi
 
 if [ "$DNSNAMESERVER" != "" ]; then
@@ -32,11 +30,13 @@ if [ -d "/hadoop/logs" ]; then
   rm -rf /hadoop/logs/*
 fi
 
-if [ ! -d "/data/dfs/name" ] && [ $ROLE == "namenode" ]; then
+/usr/sbin/sshd
+
+if [ ! -d "/data/dfs/name" ] && [ "$ROLE" == "namenode" ]; then
   $HADOOP_PREFIX/bin/hdfs namenode -format
 fi
 
-if [ $ROLE == "namenode" ]; then
+if [ "$ROLE" == "namenode" ]; then
   $HADOOP_PREFIX/sbin/start-dfs.sh
   $HADOOP_PREFIX/sbin/start-yarn.sh
   $HADOOP_PREFIX/sbin/mr-jobhistory-daemon.sh start historyserver
