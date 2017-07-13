@@ -5,7 +5,8 @@ if [ "$MODE" == "ENV" ]; then
   for h in "${hostList[@]}"; do
     slaves=$slaves$h$'\n'
   done
-  echo $slaves > $HADOOP_CONF_DIR/slaves 
+  echo "$slaves" > $HADOOP_CONF_DIR/slaves
+  sed -i '$ d' $HADOOP_CONF_DIR/slaves
 else
   cat /hosts > /etc/hosts
   IFS=' ' read -ra hostList <<< $(<$HADOOP_CONF_DIR/slaves)
